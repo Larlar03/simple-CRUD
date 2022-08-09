@@ -1,0 +1,60 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.information {
+  width: 400px;
+}
+
+.show-employees {
+  width: 800px;
+}
+form {
+  width: 100%;
+}
+
+.form-group {
+  margin: 20px 0;
+}
+
+label {
+  font-weight: 600;
+}
+
+#salary-form-group {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+#salary-form-group label {
+  width: 100%;
+}
+
+.salary-input-container {
+  width: 100%;
+  display: flex;
+}
+
+#currency-prepend {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#salaryInput {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+button {
+  width: 100%;
+}
