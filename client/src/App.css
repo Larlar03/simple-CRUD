@@ -58,3 +58,17 @@ label {
 button {
   width: 100%;
 }
+
+#update-td {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#update-salary-input {
+  width: 100px;
+}
+
+.update-button {
+  width: auto;
+}

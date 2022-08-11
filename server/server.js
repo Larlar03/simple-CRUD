@@ -55,6 +55,35 @@ app.get("/employees", (req, res) => {
   });
 });
 
+// Update employee
+app.put("/update", (req, res) => {
+  const id = req.body.id;
+  const newSalary = req.body.newSalary;
+  db.query(
+    "UPDATE employees SET salary = ? WHERE id = ?",
+    [newSalary, id],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(results);
+      }
+    }
+  );
+});
+
+// Delete employee
+app.delete("/delete/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("DELETE FROM employees WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(results);
+    }
+  });
+});
+
 app.listen(PORT, () => {
-  console.log("Listening on port 3001");
+  console.log(`Listening on port ${PORT}`);
 });

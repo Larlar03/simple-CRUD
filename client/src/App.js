@@ -9,6 +9,7 @@ function App() {
   const [city, setCity] = useState("");
   const [role, setRole] = useState("");
   const [salary, setSalary] = useState(0);
+  const [newSalary, setNewSalary] = useState(0);
 
   const [employeeList, setEmployeeList] = useState([]);
 
@@ -35,11 +36,37 @@ function App() {
 
   const getEmployees = async (e) => {
     e.preventDefault();
-
     Axios.get("http://localhost:3001/employees").then((response) => {
       setEmployeeList(response.data);
-      console.log(employeeList);
     });
+  };
+
+  const updateSalary = (e) => {
+    e.preventDefault();
+    Axios.put("http://localhost:3001/update", {
+      id: e.currentTarget.id,
+      newSalary: newSalary,
+    })
+      .then(() => {
+        console.log("Salary updated");
+        getEmployees(e);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteEmployee = (e) => {
+    e.preventDefault();
+    const id = e.currentTarget.id;
+    Axios.delete(`http://localhost:3001/delete/${id}`, {})
+      .then(() => {
+        console.log("Employee deleted");
+        getEmployees(e);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
   };
 
   return (
@@ -142,8 +169,8 @@ function App() {
           Show Employees
         </button>
         <div className="employee-list">
-          <table class="table">
-            <thead class="thead-dark">
+          <table className="table">
+            <thead className="thead-dark">
               <tr>
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
@@ -151,18 +178,44 @@ function App() {
                 <th scope="col">City</th>
                 <th scope="col">Role</th>
                 <th scope="col">Salary</th>
+                <th scope="col">New salary</th>
               </tr>
             </thead>
             <tbody>
               {employeeList.map((employee) => {
                 return (
-                  <tr>
+                  <tr key={employee.id}>
                     <td>{employee.first_name}</td>
                     <td>{employee.last_name}</td>
                     <td>{employee.age_range}</td>
                     <td>{employee.city}</td>
                     <td>{employee.role}</td>
                     <td>{employee.salary}</td>
+                    <td id="update-td">
+                      <input
+                        type="text"
+                        placeholder="0"
+                        id="update-salary-input"
+                        className="form-control"
+                        onChange={(e) => {
+                          setNewSalary(e.target.value);
+                        }}
+                      />
+                      <button
+                        className="btn btn-dark update-button"
+                        id={employee.id}
+                        onClick={updateSalary}
+                      >
+                        <i className="bi bi-arrow-repeat"></i>
+                      </button>
+                      <button
+                        className="btn btn-dark update-button"
+                        id={employee.id}
+                        onClick={deleteEmployee}
+                      >
+                        <i className="bi bi-trash3"></i>
+                      </button>
+                    </td>
                   </tr>
                 );
               })}
